@@ -2,6 +2,14 @@
 This is a simple YouTube to MP3 converter that uses the youtube-dl library to download the video and ffmpeg to convert it to an MP3 file. The app uses Tauri to create a desktop app from the web app.
 
 ## Installation
+0. Install Tauri CLI
+```bash
+npm install -g @tauri-apps/cli
+```
+or I prefer to use cargo - 
+```bash
+cargo install tauri-cli
+```
 1. Clone the repository
 2. Install the dependencies
 ```bash
