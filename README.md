@@ -22,3 +22,6 @@ To use the app, follow these steps:
 1. Paste the YouTube video URL in the input field
 2. Click the "Download" button
 3. Wait for the download to finish
+
+## Install
+To install ytmp3-tauri on Windows, use the msi package in the latest release. To use the app on other platforms, you need to build the app from the source code. Currently, Tauri supports building for Windows, macOS, and Linux (Debian and Ubuntu).
