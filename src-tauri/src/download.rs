@@ -1,9 +1,10 @@
 use std::process::Command;
+use youtube_dl::download_yt_dlp;
 
 #[tauri::command]
-pub fn download(url: &str) -> () {
-    // let yt_dlp_path = download_yt_dlp(".").await.unwrap();
-    let output = Command::new(r"C:\Users\manas\Downloads\yt-dlp.exe")
+pub async fn download(url: &str) -> Result<(), ()> {
+    let yt_dlp_path = download_yt_dlp(".").await.unwrap();
+    let output = Command::new(yt_dlp_path)
         .arg("-f")
         .arg("bestaudio")
         .arg("--extract-audio")
@@ -22,4 +23,5 @@ pub fn download(url: &str) -> () {
         .expect("Failed to execute command");
 
     println!("status: {}", output.status);
+    Ok(())
 }

@@ -7,26 +7,6 @@ const inter = Inter({ subsets: ['latin'] });
 let TauriAppsApi: { default?: any; invoke: any; app?: any; cli?: any; clipboard?: any; dialog?: any; event?: any; fs?: any; globalShortcut?: any; http?: any; notification?: any; path?: any; process?: any; shell?: any; tauri?: any; updater?: any; window?: any; os?: any; };
 
 export default function Home() {
-  const [audioFiles, setAudioFiles] = useState<string[]>([]);
-
-        useEffect(() => {
-          const loadAudioFiles = async () => {
-            try {
-              if (!TauriAppsApi) throw new Error('Tauri API not loaded');
-              const { fs } = TauriAppsApi;
-              const directory = './src-tauri';
-              const files = await fs.readDir(directory);
-              const audioFiles = files
-                .filter((file: { extension: string; }) => file.extension === 'mp3' || file.extension === 'wav')
-                .map((file: { path: any; }) => file.path);
-              setAudioFiles(audioFiles);
-            } catch (err) {
-        console.error(err);
-      }
-    };
-
-    loadAudioFiles();
-  }, []);
   const [url, setUrl] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -45,7 +25,10 @@ export default function Home() {
     try {
       if (!TauriAppsApi) throw new Error('Tauri API not loaded');
       const { invoke } = TauriAppsApi;
-      await invoke('download', { url });
+      await invoke('download', { url }).then((response: any) => {
+        console.log(response);
+      }
+      );
     } catch (err) {
       console.error(err);
     } finally {
@@ -74,12 +57,6 @@ export default function Home() {
       <div className='text-3xl font-bold text-center p-4 m-4'>
         {!loading ? 'Downloaded!' : ''}
       </div>
-      {audioFiles.map((file, index) => (
-        <audio key={index} controls>
-          <source src={file} type="audio/mpeg" />
-          Your browser does not support the audio element.
-        </audio>
-      ))}
     </div>
   );
 }
